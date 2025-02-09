@@ -48,6 +48,10 @@ export class User extends Model<UserAttributes> {
   @BeforeUpdate
   @BeforeCreate
   static async hashPassword(user: User) {
+    if (user.changed("password")) {
+      user.password = await bcript.hash(user.password, 10);
+      return user;
+    }
     user.password = await bcript.hash(user.password, 10);
   }
 }
