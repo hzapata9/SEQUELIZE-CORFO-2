@@ -54,4 +54,8 @@ export class User extends Model<UserAttributes> {
     }
     user.password = await bcript.hash(user.password, 10);
   }
+
+  async validatePassword(password: string) {
+    return await bcript.compare(password, this.password);
+  }
 }
